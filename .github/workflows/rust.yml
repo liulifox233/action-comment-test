@@ -1,0 +1,30 @@
+name: Rust
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Run
+      id: run
+      run: |
+        cargo run --verbose
+        echo "COMMENT=$(echo $COMMENT)" >> $GITHUB_OUTPUT
+    - name: Read comment
+      run: echo ${{ steps.run.outputs.COMMENT }}
+    - name: Create or Update Comment
+      uses: peter-evans/create-or-update-comment@v4.0.0
+      with: 
+        issue-number: ${{ github.event.pull_request.number }}
+        body: ${{ steps.run.outputs.COMMENT }}
