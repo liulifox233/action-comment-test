@@ -1,0 +1,2 @@
+COMMENT: Hello, world!
+Hello, world!
