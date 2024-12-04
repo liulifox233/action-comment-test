@@ -22,17 +22,21 @@ jobs:
       - name: Run
         id: run
         run: |
-          echo "COMMENT=$(cargo run)" >> $GITHUB_ENV
+          echo "COMMENT<<EOF" >> $GITHUB_ENV
+          cargo run >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
       - name: Read comment
         run: echo ${{ env.COMMENT }}
       - name: Commit Comment
         if: github.event_name == 'push'
         uses: peter-evans/commit-comment@v3.0.0
         with:
-          body: ${{ env.COMMENT }}
+          body: |
+            ${{ env.COMMENT }}
       - name: Create or Update Comment on pr
         if: github.event_name == 'pull_request'
         uses: peter-evans/create-or-update-comment@v4.0.0
         with:
           issue-number: ${{ github.event.pull_request.number }}
-          body: ${{ env.COMMENT }}
+          body: |
+            ${{ env.COMMENT }}
