@@ -26,7 +26,8 @@ jobs:
           cargo run >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
       - name: Read comment
-        run: echo ${{ env.COMMENT }}
+        run: |
+          echo ${{ env.COMMENT }}
       - name: Commit Comment
         if: github.event_name == 'push'
         uses: peter-evans/commit-comment@v3.0.0
