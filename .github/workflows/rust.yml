@@ -18,9 +18,9 @@ jobs:
       - name: Run
         id: run
         run: |
-          echo "COMMENT=$(cargo run)" >> $GITHUB_OUTPUT
+          echo "COMMENT=$(cargo run)" >> $GITHUB_ENV
       - name: Read comment
-        run: echo ${{ steps.run.outputs.COMMENT }}
+        run: echo ${{ env.COMMENT }}
       - name: Commit Comment
         if: github.event_name == 'push'
         uses: peter-evans/commit-comment@v3.0.0
