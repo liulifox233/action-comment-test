@@ -23,7 +23,13 @@ jobs:
         echo "COMMENT=$(echo $COMMENT)" >> $GITHUB_OUTPUT
     - name: Read comment
       run: echo ${{ steps.run.outputs.COMMENT }}
-    - name: Create or Update Comment
+    - name: Commit Comment
+      if: github.event_name == 'push'
+      uses: peter-evans/commit-comment@v3.0.0
+      with:
+        body: ${{ steps.run.outputs.COMMENT }}
+    - name: Create or Update Comment on pr
+      if: github.event_name == 'pull_request'
       uses: peter-evans/create-or-update-comment@v4.0.0
       with: 
         issue-number: ${{ github.event.pull_request.number }}
