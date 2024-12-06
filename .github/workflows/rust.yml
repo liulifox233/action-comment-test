@@ -26,12 +26,12 @@ jobs:
         run: cat comment.txt
         if: always()
       - name: Commit Comment
-        if: (github.event_name == 'push')
+        if: (github.event_name == 'push' && always())
         uses: peter-evans/commit-comment@v3.0.0
         with:
           body-path: ./comment.txt
       - name: Create or Update Comment on pr
-        if: (github.event_name == 'push')
+        if: (github.event_name == 'pull_request' && always())
         uses: peter-evans/create-or-update-comment@v4.0.0
         with:
           issue-number: ${{ github.event.pull_request.number }}
