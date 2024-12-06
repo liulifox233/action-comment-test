@@ -1,7 +1,7 @@
 use std::process::exit;
 
 fn main() {
-    println!("COMMENT: Hello, world!");
+    println!("test ok");
     eprintln!("test error");
     exit(1);
 }
