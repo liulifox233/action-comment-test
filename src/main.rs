@@ -1,4 +1,5 @@
 fn main() {
     println!("COMMENT: Hello, world!");
-    println!("Hello, world!");
+    eprintln!("test error");
+    panic!("test panic");
 }
